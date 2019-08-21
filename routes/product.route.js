@@ -8,5 +8,6 @@ router.post('/',productController.create);
 router.get('/:id', productController.getById); 
 router.put('/:id',productController.put); 
 router.delete('/:id',productController.delete);
-router.get('/:pageindex/:pagezise/:name*?', productController.get); 
+//router.get('/:pageindex/:pagezise/:name?/:cartegoryId?', productController.get); 
+router.get('/', productController.get); 
 module.exports = router;

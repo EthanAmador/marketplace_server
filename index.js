@@ -20,8 +20,9 @@ const app = express();
 dataBase.on('error', console.error.bind(console, 'MongoDB connection error:')); 
 //dataBase.close(); 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+//acept 50mb data for body
+app.use(bodyParser.json({limit:"50mb"}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cors()); 
 app.use('/products',product);
 app.use('/category',category); 
