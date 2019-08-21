@@ -19,7 +19,8 @@ exports.create = function(req, res) {
     description: req.body.description,
     price: req.body.price,
     categoryId:req.body.categoryId,
-    categoryName:req.body.categoryName
+    categoryName:req.body.categoryName,
+    image: req.body.image
   });
   product.save(function(err) {
     if (err) return next(err);
@@ -28,11 +29,29 @@ exports.create = function(req, res) {
   });
 };
 
-exports.get = function(req, res) {
-  Product.findById(req.params.id, function(err, product) {
+exports.getById = async function(req, res) {
+  /*Product.findById(req.params.id, function(err, product) {
     if (err) return next(err);
-    res.send(product);
+    res.send({data:product});
+  });*/
+  let _result = undefined;
+  let _query = {_id: req.params.id};
+
+  let _optionsQuery = {
+    customLabels: myCustomLabels,
+    select: "_id name description price categoryId categoryName image",
+    sort: { createDate: -1 }
+  };
+
+  _result = await Product.paginate(_query, _optionsQuery, function(
+    err,
+    productos
+  ) {
+    if (err) return err;
+    return productos;
   });
+
+  return res.send(_result);
 };
 
 exports.put = function(req, res) {
@@ -73,7 +92,7 @@ exports.get = async function(req, res) {
     page: _pageindex,
     limit: _pagesize,
     customLabels: myCustomLabels,
-    select: "_id name description price categoryId categoryName",
+    select: "_id name description price categoryId categoryName image",
     sort: { createDate: -1 }
   };
 

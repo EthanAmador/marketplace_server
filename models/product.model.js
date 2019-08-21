@@ -9,7 +9,7 @@ let ProductSchema = new Schema({
   createDate:{ type:Date, default:Date.now },
   categoryId: {type:String,required:true},
   categoryName: {type:String, required:true,max:100, lowercase:true},
-  //images: [{ image: { trype: String }, main: { type: Boolean, require: true } }]
+  image: {type:String}
 },{collection:'Products'});
 
 ProductSchema.plugin(mongoosePaginate); 
