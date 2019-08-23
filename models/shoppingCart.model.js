@@ -11,8 +11,12 @@ let shoppingCartSchema = new Schema({
     id: { type: String, require: true },
     name: { type: String, required: true, max: 100, lowercase: true }
   },
+  productImage:{type:String},
   quantity:{type:Number, required:true},
-  createDate:{ type:Date, default:Date.now }
+  //self-calculated field
+  total:{ type:Number, default: function(){ return (this.productPrice * this.quantity)}},
+  createDate:{ type:Date, default:Date.now },
+
 },{collection:"shoppingCart"});
 
 shoppingCartSchema.plugin(mongoosePaginate); 
